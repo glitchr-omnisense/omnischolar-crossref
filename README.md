@@ -1,6 +1,6 @@
 # omnischolar/crossref
 
-Crossref for [omniscient/omnischolar](https://github.com/glitchr-studio/omnischolar): the reference
+Crossref for [omnisense/omnischolar](https://github.com/glitchr-omnisense/omnischolar): the reference
 metadata of any work with a Crossref DOI - title, authors and their ORCIDs, journal or book,
 volume, pages, publisher, ISBNs, licence, the citation count Crossref knows - the works deposited
 with an ORCID, the works signed with a name, a bibliographic search. No key; with a `mailto`,
