@@ -13,6 +13,7 @@ use Symfony\Component\HttpClient\HttpClient;
  *   options:
  *     mailto: 'support@glitchr.io'           # sent with every call and in the User-Agent: Crossref's polite pool
  *     base_uri: 'https://api.crossref.org/'
+ *     throttle: 0                           # seconds between two calls
  */
 final class CrossrefSourceFactory extends SourceFactory
 {
@@ -32,6 +33,7 @@ final class CrossrefSourceFactory extends SourceFactory
             $c->get('mailto'),
             (string) $c->get('base_uri', CrossrefSource::BASE_URI),
             ['User-Agent' => self::userAgent($c)],
+            (float) $c->get('throttle', 0.0),
         );
     }
 }

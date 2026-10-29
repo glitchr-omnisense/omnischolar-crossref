@@ -141,4 +141,15 @@ final class CrossrefSourceTest extends TestCase
         $this->expectException(ProviderException::class);
         $this->source(new MockResponse('{"status":"failed"}', ['http_code' => 400]))->search(new Query(text: 'x'));
     }
+
+    /** The throttle every factory takes (SourceFactory): seconds left between two calls. */
+    public function testTheThrottleLeavesItsSeconds(): void
+    {
+        $http = new MockHttpClient(static fn (): MockResponse => new MockResponse((string) file_get_contents(__DIR__.'/Fixtures/work-doi.json')));
+        $source = (new CrossrefSourceFactory($http))->create(['throttle' => 0.3]);
+        $start = microtime(true);
+        $source->work('doi:10.1039/D4SC04973J');
+        $source->work('doi:10.1039/D4SC04973J');
+        self::assertGreaterThanOrEqual(0.29, microtime(true) - $start);
+    }
 }

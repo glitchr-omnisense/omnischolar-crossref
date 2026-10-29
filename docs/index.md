@@ -39,10 +39,7 @@ documentation said in 2026); without it, the public pool.
 | `mailto` | string | `null` | no | sent with every call as `mailto`, and in the `User-Agent` |
 | `user_agent` | string | `omnischolar/1.x (+https://github.com/glitchr-omnisense/omnischolar)` and the `mailto` | no | |
 | `base_uri` | string | `https://api.crossref.org/` | no | |
-
-> [!WARNING]
-> Known defect: `throttle` is not read by this factory (the source has no interval), where every
-> factory is said to take it.
+| `throttle` | float | `0.0` | no | seconds left between two calls of the source |
 
 ## Capabilities
 
