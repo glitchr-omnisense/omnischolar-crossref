@@ -24,6 +24,18 @@ library (renanbr/crossref-client) would add a dependency without removing code.
 
 See [docs/](docs/index.md).
 
+## Usage policy
+
+Declared as data in [`policy.json`](policy.json) (read at https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/ on 2026-11-10), and honoured on every request by the
+core: a limit reached waits when its window ends within `max_wait` seconds, else the request is not
+sent ([Usage policies](https://github.com/glitchr-omnisense/omnischolar/blob/1.x/docs/policies.md)).
+
+- Limits: 5 a second for single; 1 a second for list; at most 1 in flight.
+- Licence: not stated; commercial use: allowed.
+- Credit: not required.
+- Needs: nothing.
+- With a `mailto`: the polite pool, 10 single records and 3 lists a second, 3 in flight (`CrossrefSource::usagePolicy()`).
+
 ## Responsibility
 
 This package is an independent, unofficial client: it is not affiliated with, endorsed by or

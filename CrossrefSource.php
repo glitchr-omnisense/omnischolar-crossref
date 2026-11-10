@@ -15,6 +15,7 @@ use Omnischolar\Source\Capability;
 use Omnischolar\Source\HttpSource;
 use Omnischolar\Source\Page;
 use Omnischolar\Source\Query;
+use Omnisense\Contracts\Policy\UsagePolicy;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -62,6 +63,35 @@ final class CrossrefSource extends HttpSource
         float $throttle = 0.0,
     ) {
         parent::__construct($http, $baseUri, $headers, $throttle);
+    }
+
+    /**
+     * Crossref's pools: the public one by default (policy.json); the polite
+     * one when a contact address is given (mailto), 10 single records and 3
+     * lists a second, 3 requests in flight - the figures its
+     * access-and-authentication page and its x-rate-limit headers gave on
+     * 2026-11-10.
+     */
+    public function usagePolicy(): UsagePolicy
+    {
+        $declared = parent::usagePolicy();
+        if (null === $this->mailto || '' === $this->mailto) {
+            return $declared;
+        }
+
+        return UsagePolicy::fromArray(array_replace($declared->toArray(), [
+            'rateLimits' => [
+                ['max' => 10, 'window' => 'second', 'operations' => ['single'], 'note' => 'Polite pool (mailto), single records.'],
+                ['max' => 3, 'window' => 'second', 'operations' => ['list'], 'note' => 'Polite pool (mailto), lists.'],
+            ],
+            'concurrency' => 3,
+        ]));
+    }
+
+    /** "single" for a work by its DOI (works/{doi}), "list" for a query of works: Crossref counts them apart. */
+    protected function operation(string $method, string $url): string
+    {
+        return preg_match('~/works/[^?]+~', $url) ? 'single' : 'list';
     }
 
     public function getName(): string

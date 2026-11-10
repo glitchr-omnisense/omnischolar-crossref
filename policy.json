@@ -1,0 +1,57 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "crossref",
+    "rateLimits": [
+        {
+            "max": 5,
+            "window": "second",
+            "scope": "application",
+            "operations": [
+                "single"
+            ],
+            "note": "Public pool, single-record requests (x-rate-limit-limit 5 / 1s, x-api-pool public-single). Polite pool (mailto parameter or agent header): 10 a second, concurrency 3. Plus (paid key): 150 a second, no concurrency limit."
+        },
+        {
+            "max": 1,
+            "window": "second",
+            "scope": "application",
+            "operations": [
+                "list"
+            ],
+            "note": "Public pool, list requests (x-rate-limit-limit 1 / 1s, x-api-pool public-array). Polite pool: 3 a second, concurrency 3."
+        }
+    ],
+    "concurrency": 1,
+    "rights": {
+        "commercial": "allowed",
+        "openSourceRequired": null,
+        "caching": {
+            "permission": "allowed",
+            "maxTtl": null
+        },
+        "storage": "allowed",
+        "redistribution": "allowed",
+        "attribution": {
+            "required": false,
+            "text": null,
+            "url": null,
+            "where": []
+        },
+        "licence": null
+    },
+    "requirements": {
+        "key": false,
+        "userAgent": {
+            "required": false,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": "https://www.crossref.org/documentation/retrieve-metadata/",
+        "policy": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/",
+        "verifiedAt": "2026-11-10",
+        "declaredBy": "maintainer",
+        "contact": "https://www.crossref.org/contact/",
+        "notes": "Read on 2026-11-10: the access-and-authentication page's table (public 5 / concurrency 1, polite 10 / 3, Plus 150 / none; the interval is given by the x-rate-limit-interval header). Test calls the same day showed separate limits for single records and lists: public-single 5/1s, public-array 1/1s, polite-single 10/1s, polite-array 3/1s, concurrency 1 (public) or 3 (polite). The keyless public figures are declared; the polite pool needs a mailto parameter or an e-mail in the agent/User-Agent header. 429 = rate limited, 403 = blocked: back off. Metadata: facts, not copyrightable, 'reusable without restriction'; Crossref-generated data public domain (CC0); abstracts stay under the publisher's or author's copyright (Crossref may distribute them, the licence is theirs). No licence id for the metadata itself."
+    }
+}
