@@ -24,6 +24,14 @@ library (renanbr/crossref-client) would add a dependency without removing code.
 
 See [docs/](docs/index.md).
 
+## Install
+
+```sh
+composer require omnischolar/crossref
+```
+
+It brings the family's core, `omnisense/omnischolar`, and `omnisense/contracts` with it. No account and no key; a `mailto` of yours puts the calls in Crossref's polite pool ([`policy.json`](policy.json)). `$http` is `HttpClient::create()` in plain PHP.
+
 ## Usage policy
 
 Declared as data in [`policy.json`](policy.json) (read at https://www.crossref.org/documentation/retrieve-metadata/rest-api/access-and-authentication/ on 2026-11-10), and honoured on every request by the
