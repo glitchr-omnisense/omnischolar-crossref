@@ -67,7 +67,7 @@ record.
 
 **Works by name.** Crossref's author query is fuzzy: its answers come by relevance and are kept
 only when one of their authors has the family name asked and the same first given name - or its
-initial, when the work gives initials only (`K. Nakatani`, not `Kenji Nakatani`). `Page::$total`
+initial, when the work gives initials only (`J. Exemple`, not `Julie Exemple`). `Page::$total`
 is then `null`.
 
 **A work.** Title and subtitle; type from Crossref's (`posted-content` is a preprint unless its
@@ -91,7 +91,7 @@ use Symfony\Component\HttpClient\HttpClient;
 
 $crossref = (new CrossrefSourceFactory(HttpClient::create()))->create(['mailto' => getenv('OMNISCHOLAR_MAILTO') ?: null]);
 
-$w = $crossref->work('10.1039/D4SC04973J');
+$w = $crossref->work('10.1140/EPJD/S10053-022-00549-6');
 echo $w->title, "\n", $w->venue?->name, ' ', $w->volume, '(', $w->issue, ') ', $w->pages, '; ', $w->publisher, '; cited ', $w->citations, '; ', $w->license, "\n";
 foreach ($w->authors as $a) {
     echo '  ', $a->sortName(), ' ', $a->orcid() ?? '', "\n";
@@ -99,18 +99,19 @@ foreach ($w->authors as $a) {
 ```
 
 ```
-Acid-sensitive photoswitches: towards catalytic on-demand release of stored light energy
-Chemical Science 15(39) 16034-16039; Royal Society of Chemistry (RSC); cited 8; http://creativecommons.org/licenses/by/3.0/
-  Chocron, Léa 
-  Baggi, Nicolò 0000-0003-4743-5151
-  Ribeiro, Enrique 0000-0001-5795-7418
-  Goetz, Vincent 0000-0001-5700-6487
-  Yu, Pei 0000-0003-1801-1579
-  Nakatani, Keitaro 0009-0005-1387-7295
-  Métivier, Rémi 0000-0001-5612-8327
+Bichromatic state-dependent disordered potential for Anderson localization of ultracold atoms
+The European Physical Journal D 76(11) ; Springer Science and Business Media LLC; cited 5; https://creativecommons.org/licenses/by/4.0
+  Lecoutre, Baptiste 
+  Guo, Yukun 
+  Yu, Xudong 
+  Niranjan, M. 
+  Mukhtar, Musawwadah 
+  Volchkov, Valentin V. 
+  Aspect, Alain 
+  Josse, Vincent 0000-0003-1461-9747
 ```
 
-(called live on 2026-10-26 at 14:18 UTC, from the core's harness image, without a `mailto`)
+(the answer recorded from api.crossref.org on 2026-11-13, that the tests read)
 
 In Symfony:
 
@@ -133,9 +134,9 @@ omnischolar:
 ## Verified, and not
 
 Tested offline: `Tests/CrossrefSourceTest.php` (6 tests), on `MockHttpClient` with answers recorded
-on 2026-10-04 - a work by DOI (10.1039/d4sc04973j), the eight works deposited with Juan
-Maldacena's ORCID, the answer to `query.author=Monica Neagoy` (four of hers among others). Called
-live on 2026-10-04 and on 2026-10-26 (the example above).
+on 2026-10-04 (the eight works deposited with Juan Maldacena's ORCID) and on 2026-11-13 (a work by
+DOI, 10.1140/epjd/s10053-022-00549-6; the answer to `query.author=Alain Aspect`, the first twenty).
+Called live on 2026-10-04, 2026-10-26 and 2026-11-13.
 
 Limits of the service: works by name rest on a fuzzy query - a name shared with other people of
 the same family name and first name cannot be told apart; works by ORCID are those whose

@@ -8,9 +8,9 @@ the calls go to Crossref's polite pool.
 
 ```php
 $crossref = (new CrossrefSourceFactory($http))->create(['mailto' => 'support@glitchr.io']);
-$crossref->work('10.1039/d4sc04973j');
+$crossref->work('10.1140/epjd/s10053-022-00549-6');
 $crossref->works('0000-0002-9127-1687');       // deposited with that ORCID
-$crossref->works('Monica Neagoy');             // signed with that name
+$crossref->works('Alain Aspect');              // signed with that name
 ```
 
 ```yaml

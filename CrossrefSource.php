@@ -137,7 +137,7 @@ final class CrossrefSource extends HttpSource
 
     /**
      * The same family name, and the same first given name - or its initial,
-     * when the work gives initials only ("K. Nakatani", not "Kenji Nakatani").
+     * when the work gives initials only ("J. Exemple", not "Julie Exemple").
      */
     private static function sameName(Contributor $wanted, Contributor $contributor): bool
     {
